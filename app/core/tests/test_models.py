@@ -20,7 +20,7 @@ class ModelTests(TestCase):
             password=password
         )
 
-        self.assertEquals(user.email, email)
+        self.assertEqual(user.email, email)
         self.assertTrue(user.check_password(password))
 
     def test_new_user_email_normalized(self):
@@ -28,7 +28,7 @@ class ModelTests(TestCase):
         email = 'dev@OWNSMUSTANG.COM'
         user = get_user_model().objects.create_user(email, 'Mustang123')
 
-        self.assertEquals(user.email, email.lower())
+        self.assertEqual(user.email, email.lower())
 
     def test_new_user_invalid_email(self):
         """Test creating user with no email raise value error"""
@@ -53,3 +53,12 @@ class ModelTests(TestCase):
         )
 
         self.assertEqual(str(tag), tag.name)
+
+    def test_ingredient_str(self):
+        """Test the ingredient string representation"""
+        ingredient = models.Ingredient.objects.create(
+            user=sample_user(),
+            name='Cucumber'
+        )
+
+        self.assertEqual(str(ingredient), ingredient.name)
